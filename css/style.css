@@ -1,0 +1,189 @@
+body {
+/*	background: url(../scrougebg.jpg) no-repeat center center fixed;
+	background-size: cover;*/
+	font-weight: bolder;
+	text-align: center;
+	font-family: 'Cinzel', serif;
+	
+}
+
+#ban {
+	font-size: 10vw;
+	line-height: .75em;
+	text-shadow: 0px 0px .1em #ffbf00;
+	margin: 1em 0 1em;
+	font-family: 'Playball', sans-serif;
+	color: black;
+}
+
+#wrapper {
+	width: 80vw;
+	height: 80vw;
+	margin: 2em auto;
+	text-align: center;
+}
+
+#board {
+	text-align: center;
+	width: 100%;
+	max-width: 30em;
+	max-height: 30em;
+	margin: 0 auto;
+}
+
+.box {
+	height: 25vw;
+	width: 32%;
+	float: left;
+	background-color: rgba(0,0,0,.5);
+	border: #ffbf00 solid 2px;
+	font-size: 20vw;
+	max-height: 9em;
+}
+
+.winScreen  {
+	display: inline-block;
+	position: fixed;
+	background-image: url(../work.gif);
+	background-size: cover;
+	background-position: center;
+	height: 101vh;
+	width: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;	
+	z-index: -1;
+}
+
+.unpicked {
+	background-image: url("http://www.ssgreenberg.name/Drupal/Drupal/sites/default/files/StevesTutorials/money-bags.png");
+	background-size: cover;
+	background-position:  center center;
+}
+
+.score {
+  position: fixed;
+  display: inline-block;
+  background-color: rgba(0,0,0,.5);
+  width: 90%;
+  margin: 2em auto 0;
+  height: 1em;
+  padding: 1em 5%;
+  bottom: 0;
+  left: 0;
+  z-index: 3000;
+  color: #ffbf00;
+  font-weight: lighter;		
+}
+
+#player1Wins {
+	display: inline-block;
+	float: left;
+}
+
+#player2Wins {
+	display: inline-block;
+	float: right;
+}
+
+.score img {
+	height: 2em;
+	margin: -.5em 0;
+}
+
+#button {
+	position: fixed;
+	left: 0;
+	right: 0;
+	z-index: 5000;
+	font-size: 2em;
+	padding: .5em 0;
+  	width: 83%;
+  	max-width: 30em;
+  	background-color: #ffbf00;
+  	margin: 0 auto;
+  	color: black;
+ 	font-weight: bold;
+ 	letter-spacing: .05em;
+ 	bottom:2.5em;
+}
+
+#button:hover {
+  	background-color: black;
+  	border: #ffbf00 solid 2px;
+  	color: #ffbf00;
+ 	border: rgba(0,0,0,.5) solid 2px; 
+ 	
+}
+
+.circle {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 50px auto;
+}
+
+.red {
+  background: red;
+}
+
+.green {
+  background: green;
+}
+
+
+
+@media (min-width: 600px) {
+
+#wrapper {
+	height: auto;
+	width: auto;
+	margin-left: 10em;
+}
+
+.box {
+	height: 9.75em;
+	width: 9.75em;
+	float: left;
+	font-size: 1em;
+}
+	
+#board {
+
+	width: 33em;
+	height: 33em;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.score {
+position: fixed;
+  display: inline-block;
+  background-color: rgba(0,0,0,.5);
+  width: 7.5em;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding:3em .5em;
+  text-align: left;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+#player1Wins {
+	display: inline-block;
+	float: none;
+
+}
+
+#player2Wins {
+	display: inline-block;
+	float: none;
+	bottom: 0;	
+
+}
+
+
+}
+

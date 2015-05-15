@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>TicTacToe</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>	
+	<link href='http://fonts.googleapis.com/css?family=Cinzel:400,700,900' rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="js/angular.min.js"></script>	
+    <script type="text/javascript" src="js/firebase.js"></script>
+    <script type="text/javascript" src="js/angularfire.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>        
+	<script type="text/javascript" src="js/controller.js"></script>
+</head>
+<body ng-controller="MainController as mainCtrl">	
+	<div id="wrapper">	
+	<h1 id="ban">Get that Dough</h1>
+		<div id="board" ng-show="mainCtrl.board">
+		<div class="box" ng-repeat="b in mainCtrl.boxes" ng-click="mainCtrl.playerMove($index)" ng-class="{'unpicked': b.bag}"> {{b.text}}
+		</div>
+		</div>
+	</div>	
+	<div id="button" ng-show="mainCtrl.resetButton" ng-click="mainCtrl.reset()">Play Again</div>
+	<div class="score">
+		<div id="player1Wins">Player X | <span ng-bind="mainCtrl.tallyX"></span></div>
+		<div id="player2Wins"><span ng-bind="mainCtrl.tallyO"></span>Player O | </div>
+	</div>
+	<div class="winScreen" ng-show="mainCtrl.win"></div>
+</body>
+</html>
