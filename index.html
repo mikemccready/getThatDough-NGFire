@@ -22,8 +22,8 @@
 	</div>	
 	<div id="button" ng-show="mainCtrl.resetButton" ng-click="mainCtrl.reset()">Play Again</div>
 	<div class="score">
-		<div id="player1Wins">Player X | <span ng-bind="mainCtrl.tallyX"></span></div>
-		<div id="player2Wins"><span ng-bind="mainCtrl.tallyO"></span>Player O | </div>
+		<div id="player1Wins">Player X | <span ng-bind="mainCtrl.tallyX.wins"></span></div>
+		<div id="player2Wins"><span ng-bind="mainCtrl.tallyO.wins"></span>Player O | </div>
 	</div>
 	<div class="winScreen" ng-show="mainCtrl.win"></div>
 </body>

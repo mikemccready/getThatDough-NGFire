@@ -10,36 +10,64 @@ angular
         
         self.win = false;
         self.board = true;
-        self.turn = true;
-        self.resetButton = false;
+        self.resetButton = true;
+        self.tallyX = function(){
+
+            var ref = new Firebase("https://getthatdough.firebaseio.com/tallyX");
+            var tallyX = $firebaseObject(ref); 
+            return tallyX;       
+
+        }(); 
+
+        self.tallyO = function(){
+
+            var ref = new Firebase("https://getthatdough.firebaseio.com/tallyO");
+            var tallyO = $firebaseObject(ref); 
+            return tallyO;       
+
+        }();
+        
+        //sets player object with alternating turn property from "x" to "o"
+        self.player = function(){
+
+            var ref = new Firebase("https://getthatdough.firebaseio.com/player");
+            var player = $firebaseObject(ref); 
+            return player;       
+
+        }();           
+               
 
         self.boxes = function(){
 
-            var ref = new Firebase("https://getthatdough.firebaseio.com/");
+            var ref = new Firebase("https://getthatdough.firebaseio.com/boxes");
             var boxes = $firebaseObject(ref);         
             return boxes;
+            console.log(self.turn)
 
         }();
 
         self.playerMove = function(i){
+
             if (self.boxes[i].text !== ""){
                 console.log("taken");
             }
-            else if (self.turn === true){
-                self.boxes[i].bag = false;
+            else if (self.player.turn === "x"){
                 self.boxes[i].text = "x";
-                self.turn = false;
+                self.player.turn = "o";
             }else {
-                self.boxes[i].bag = false;
                 self.boxes[i].text = "o";
-                self.turn = true;     
+                self.player.turn = "x";   
             } 
+            self.boxes[i].bag = false;            
             self.boxes.$save();
-            checkWin();   
+            self.player.$save();
+            checkWin();  
+
         }
 
 
        function checkWin(){
+            
             if(
                 //check rows for 3 x's
                    ((self.boxes[0].text === "x") && (self.boxes[1].text === "x") && (self.boxes[2].text === "x"))
@@ -55,13 +83,14 @@ angular
             ){  
                 //a win condition is satisfied, run win events big party
                 self.win = true;
-                document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/iSJv10QN_8g?autoplay=1" frameborder="0"></iframe>';
+                // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/iSJv10QN_8g?autoplay=1" frameborder="0"></iframe>';
                 //board hidden
                 self.board = false;
                 //reset button appears                
                 self.resetButton = true;
                 //win x tally increments
-                self.tallyX ++;
+                self.tallyX.wins ++;
+                self.tallyX.$save();
                 console.log('X wins')               
             }else if( 
                 //check rows for 3 o's
@@ -83,24 +112,26 @@ angular
                 //reset button appears
                 self.resetButton = true;
                 //win o tally increments
-                self.tallyO ++;
+                self.tallyO.wins ++;
+                self.tallyO.$save();
                 console.log('O wins')                
             }
-
 
         }    
 
 
         self.reset = function(){
+
             for (var i = 0; i < 9; i ++){
-            self.boxes[i].bag = true;
-            self.boxes[i].text = "";
-            self.win = false;
-            self.board = true;
-            self.resetButton = false;
-            self.boxes.$save();
-            document.getElementsByClassName('winScreen')[0].innerHTML = '';
+                self.boxes[i].bag = true;
+                self.boxes[i].text = "";
+                self.win = false;
+                self.board = true;
+                self.resetButton = false;
+                self.boxes.$save();
+                // document.getElementsByClassName('winScreen')[0].innerHTML = '';
             } 
+
         }
 
     
