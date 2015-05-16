@@ -5,25 +5,25 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>	
-	<link href='http://fonts.googleapis.com/css?family=Cinzel:400,700,900' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Cardo:400,700' rel='stylesheet' type='text/css'>
 		<script type="text/javascript" src="js/angular.min.js"></script>	
     <script type="text/javascript" src="js/firebase.js"></script>
     <script type="text/javascript" src="js/angularfire.js"></script>
     <script type="text/javascript" src="js/app.js"></script>        
 	<script type="text/javascript" src="js/controller.js"></script>
+	<meta name="viewport" content="initial-scale=1">
 </head>
 <body ng-controller="MainController as mainCtrl">	
-	<div id="wrapper">	
 	<h1 id="ban">Get that Dough</h1>
-		<div id="board" ng-show="mainCtrl.board">
-		<div class="box" ng-repeat="b in mainCtrl.boxes" ng-click="mainCtrl.playerMove($index)" ng-class="{'unpicked': b.bag}"> {{b.text}}
+	<div id="board" ng-show="mainCtrl.board">
+		<div class="box" ng-repeat="b in mainCtrl.boxes" ng-click="mainCtrl.playerMove($index)" ng-class="{'unpicked': b.bag}">{{b.text}}
 		</div>
-		</div>
-	</div>	
-	<div id="button" ng-show="mainCtrl.resetButton" ng-click="mainCtrl.reset()">Play Again</div>
+	</div>
+	<div id="button" ng-show="mainCtrl.resetButton" ng-click="mainCtrl.reset()" id="animated-example" class="animated pulse">Play Again</div>
+	<div id="clearboard" ng-click="mainCtrl.clearBoard()">Clear</div>
 	<div class="score">
-		<div id="player1Wins">Player X | <span ng-bind="mainCtrl.tallyX.wins"></span></div>
-		<div id="player2Wins"><span ng-bind="mainCtrl.tallyO.wins"></span>Player O | </div>
+		<div id="player1Wins">PLAYER X | <span ng-bind="mainCtrl.tallyX.wins"></span></div>
+		<div id="player2Wins">PLAYER O | <span ng-bind="mainCtrl.tallyO.wins"></span></div>
 	</div>
 	<div class="winScreen" ng-show="mainCtrl.win"></div>
 </body>

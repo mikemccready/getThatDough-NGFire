@@ -1,44 +1,35 @@
 body {
 /*	background: url(../scrougebg.jpg) no-repeat center center fixed;
 	background-size: cover;*/
-	font-weight: bolder;
 	text-align: center;
-	font-family: 'Cinzel', serif;
+	font-family: 'Cardo', serif;
+	font-weight: bold;
 	
 }
 
 #ban {
-	font-size: 10vw;
-	line-height: .75em;
+	font-size: 12vw;
 	text-shadow: 0px 0px .1em #ffbf00;
-	margin: 1em 0 1em;
+	margin: .5em 0 .4em;
 	font-family: 'Playball', sans-serif;
+	font-weight: bolder;
 	color: black;
 }
 
-#wrapper {
+#board {
 	width: 80vw;
 	height: 80vw;
-	margin: 2em auto;
-	text-align: center;
-}
-
-#board {
-	text-align: center;
-	width: 100%;
-	max-width: 30em;
-	max-height: 30em;
 	margin: 0 auto;
 }
 
 .box {
-	height: 25vw;
-	width: 32%;
+	height: 31.5%;
+	width: 31.5%;
 	float: left;
-	background-color: rgba(0,0,0,.5);
+	background-color: rgba(0,0,0,.33);
 	border: #ffbf00 solid 2px;
-	font-size: 20vw;
-	max-height: 9em;
+	font-size: 17.5vw;
+
 }
 
 .winScreen  {
@@ -62,19 +53,39 @@ body {
 }
 
 .score {
-  position: fixed;
-  display: inline-block;
-  background-color: rgba(0,0,0,.5);
-  width: 90%;
-  margin: 2em auto 0;
-  height: 1em;
-  padding: 1em 5%;
-  bottom: 0;
-  left: 0;
-  z-index: 3000;
-  color: #ffbf00;
-  font-weight: lighter;		
+  	position: fixed;
+  	display: inline-block;
+	width: 90%;
+  	margin: 1em auto 0;
+  	padding: .5em 5%;
+  	bottom: 0;
+  	left: 0;
+  	z-index: 3000;
+  	background-color: rgba(255,255,255,.66);
+  	color: rgba(0,0,0,);
+  	font-size: 1em;	
 }
+
+.score span {
+	color: #ffbf00;
+}
+
+#clearboard {
+  	position: fixed;
+  	display: inline-block;
+	width: 20%;
+  	margin: .9em 40%;
+  	bottom: 0;
+  	left: 0;
+  	height: 1em;
+  	z-index: 4000;
+  	color: rgba(0,0,0,.33);
+  	font-size: 1em;	
+}
+
+#clearboard:hover {
+	color: black;
+}	
 
 #player1Wins {
 	display: inline-block;
@@ -86,16 +97,11 @@ body {
 	float: right;
 }
 
-.score img {
-	height: 2em;
-	margin: -.5em 0;
-}
-
 #button {
 	position: fixed;
 	left: 0;
 	right: 0;
-	z-index: 5000;
+	z-index: 6000;
 	font-size: 2em;
 	padding: .5em 0;
   	width: 83%;
@@ -116,74 +122,63 @@ body {
  	
 }
 
-.circle {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  margin: 50px auto;
+.animated { 
+    -webkit-animation-duration: 2s; 
+    animation-duration: 2s; 
+    -webkit-animation-fill-mode: both; 
+    animation-fill-mode: both; 
+    -webkit-animation-timing-function: ease-in-out; 
+    animation-timing-function: ease-in-out; 
+    animation-iteration-count:infinite; 
+    -webkit-animation-iteration-count:infinite; 
+} 
+
+@-webkit-keyframes pulse { 
+    0% { -webkit-transform: scale(1); } 
+    50% { -webkit-transform: scale(1.05); } 
+    100% { -webkit-transform: scale(1); } 
+} 
+@keyframes pulse { 
+    0% { transform: scale(1); } 
+    50% { transform: scale(1.05); } 
+    100% { transform: scale(1); } 
+} 
+.pulse { 
+    -webkit-animation-name: pulse; 
+    animation-name: pulse; 
 }
 
-.red {
-  background: red;
-}
-
-.green {
-  background: green;
-}
 
 
+@media (min-width: 35em) {
 
-@media (min-width: 600px) {
+	#ban {
+		font-size: 9vw;
+		line-height: .5em;
+		margin: .5em 0;
 
-#wrapper {
-	height: auto;
-	width: auto;
-	margin-left: 10em;
-}
+	}	
 
-.box {
-	height: 9.75em;
-	width: 9.75em;
-	float: left;
-	font-size: 1em;
-}
+	.box {
+		font-size: 17.5vh;
+	}
 	
-#board {
+	#board {
 
-	width: 33em;
-	height: 33em;
-	margin: 0 auto;
-	text-align: center;
-}
-
-.score {
-position: fixed;
-  display: inline-block;
-  background-color: rgba(0,0,0,.5);
-  width: 7.5em;
-  height: 100vh;
-  left: 0;
-  top: 0;
-  margin: 0;
-  padding:3em .5em;
-  text-align: left;
-  font-size: 1.25em;
-  font-weight: bold;
-}
-
-#player1Wins {
-	display: inline-block;
-	float: none;
+		width: 70vh;
+		height: 70vh;
+		margin: 0 auto;
+	}
 
 }
 
-#player2Wins {
-	display: inline-block;
-	float: none;
-	bottom: 0;	
+@media (max-width: 420px) {
 
-}
+/*	.box {
+		height: 30%;
+		width: 30%;
+	}*/
 
 
-}
+}	
 
