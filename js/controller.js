@@ -8,7 +8,7 @@ angular
 
     	var self = this;
         
-        self.win = false;
+        self.winScreen = false;
         self.board = true;
         self.resetButton = false;
         self.tallyX = function(){
@@ -50,24 +50,29 @@ angular
             if (self.boxes[i].text !== ""){
                 console.log("taken");
             }
-            else if (self.player.turn === "x"){
-                self.boxes[i].text = "X";
-                self.player.turn = "o";
-            }else {
+            else if (self.player.turn % 2 === 0){
                 self.boxes[i].text = "O";
-                self.player.turn = "x";   
+                self.player.turn ++;
+            }else {
+                self.boxes[i].text = "X";
+                self.player.turn ++;   
             } 
             self.boxes[i].bag = false;            
             self.boxes.$save();
             self.player.$save();
+            console.log(self.player.turn)
             checkWin();  
 
         }
 
 
        function checkWin(){
+
+            if( self.player.turn > 8 ){
+                console.log("tie");
+                self.resetButton = true;
             
-            if(
+            }else if(
                 //check rows for 3 x's
                    ((self.boxes[0].text === "X") && (self.boxes[1].text === "X") && (self.boxes[2].text === "X"))
                 || ((self.boxes[3].text === "X") && (self.boxes[4].text === "X") && (self.boxes[5].text === "X"))
@@ -82,7 +87,7 @@ angular
             ){  
                 document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';
                 //a win condition is satisfied, run win events big party
-                self.win = true;
+                self.winScreen = true;
                 // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/iSJv10QN_8g?autoplay=1" frameborder="0"></iframe>';
                 //board hidden
                 self.board = false;
@@ -106,8 +111,8 @@ angular
                 ||  ((self.boxes[2].text === "O") && (self.boxes[4].text === "O") && (self.boxes[6].text === "O"))
             ){ 
                 document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';             
-                //a win condition is satisfied, run win events big party
-                self.win = true;
+                //a win condition is satisfied
+                self.winScreen = true;
                 //board hidden
                 self.board = false;
                 //reset button appears
@@ -117,21 +122,25 @@ angular
                 self.tallyO.$save();
                 console.log('O wins')                
             }
-
         }    
 
 
         self.reset = function(){
 
             for (var i = 0; i < 9; i ++){
+                
                 self.boxes[i].bag = true;
                 self.boxes[i].text = "";
-                self.win = false;
+                self.winScreen = false;
                 self.board = true;
-                self.resetButton = false;
                 self.boxes.$save();
                 document.getElementsByClassName('winScreen')[0].innerHTML = '';
-            } 
+
+            }
+            self.resetButton = false; 
+            self.player.turn = 0;
+            self.player.$save();            
+
 
         }
 

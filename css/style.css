@@ -79,7 +79,7 @@ body {
   	left: 0;
   	height: 1em;
   	z-index: 4000;
-  	color: rgba(0,0,0,.33);
+  	color: #ffbf00;
   	font-size: 1em;	
 }
 
@@ -172,12 +172,12 @@ body {
 
 }
 
-@media (max-width: 420px) {
+@media (min-width: 55em) {
 
-/*	.box {
-		height: 30%;
-		width: 30%;
-	}*/
+#ban {
+	font-size: 6vw;
+
+}v
 
 
 }	
