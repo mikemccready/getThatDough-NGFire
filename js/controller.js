@@ -8,16 +8,11 @@ angular
 
     	var self = this;
         
-        self.winScreen = false;
-        self.board = true;
-        self.resetButton = false;
+        self.gameEvents = function(){
 
-        //sets up header to announce outcome
-        self.header = function(){
-
-            var ref = new Firebase("https://getthatdough.firebaseio.com/header");
-            var header = $firebaseObject(ref);         
-            return header;
+            var ref = new Firebase("https://getthatdough.firebaseio.com/gameEvents");
+            var gameEvents = $firebaseObject(ref);         
+            return gameEvents;
 
         }();
 
@@ -29,51 +24,24 @@ angular
             return boxes;
 
         }();
-
-        //sets up p1 win tally
-        self.tallyX = function(){
-
-            var ref = new Firebase("https://getthatdough.firebaseio.com/tallyX");
-            var tallyX = $firebaseObject(ref); 
-            return tallyX;       
-
-        }(); 
-       
-        //sets up p2 win tally
-        self.tallyO = function(){
-
-            var ref = new Firebase("https://getthatdough.firebaseio.com/tallyO");
-            var tallyO = $firebaseObject(ref); 
-            return tallyO;       
-
-        }();
-        
-        //sets player turn variable
-        self.player = function(){
-
-            var ref = new Firebase("https://getthatdough.firebaseio.com/player");
-            var player = $firebaseObject(ref); 
-            return player;       
-
-        }();  
-
+  
         //determines what move is recorded with incrementing turn variable      
         self.playerMove = function(i){
             //square is taken
             if (self.boxes[i].text !== ""){
                 console.log("taken");
             }
-            else if (self.player.turn % 2 === 0){
-                self.boxes[i].text = "O";
-                self.player.turn ++;
-            }else {
+            else if (self.gameEvents.turn % 2 === 0){
                 self.boxes[i].text = "X";
-                self.player.turn ++;   
+                self.gameEvents.turn ++;
+                self.gameEvents.music = true;
+            }else {
+                self.boxes[i].text = "O";
+                self.gameEvents.turn ++;   
             } 
             self.boxes[i].bag = false;            
             self.boxes.$save();
-            self.player.$save();
-            console.log(self.player.turn)
+            self.gameEvents.$save();
             checkWin();  
 
         }
@@ -81,12 +49,32 @@ angular
         //function establishes tie and win conditions
        function checkWin(){
 
-            if( self.player.turn > 8 ){
-                self.header.text = "It's a Tie";
-                self.header.$save();
-                console.log("tie");
-                self.resetButton = true;
-            
+            if( 
+                //check rows for 3 o's
+                    ((self.boxes[0].text === "O") && (self.boxes[1].text === "O") && (self.boxes[2].text === "O"))
+                ||  ((self.boxes[3].text === "O") && (self.boxes[4].text === "O") && (self.boxes[5].text === "O"))
+                ||  ((self.boxes[6].text === "O") && (self.boxes[7].text === "O") && (self.boxes[8].text === "O"))
+                //check cols for 3 o's
+                ||  ((self.boxes[0].text === "O") && (self.boxes[3].text === "O") && (self.boxes[6].text === "O"))
+                ||  ((self.boxes[1].text === "O") && (self.boxes[4].text === "O") && (self.boxes[7].text === "O"))
+                ||  ((self.boxes[2].text === "O") && (self.boxes[5].text === "O") && (self.boxes[8].text === "O"))
+                //check diags for 3 o's
+                ||  ((self.boxes[0].text === "O") && (self.boxes[4].text === "O") && (self.boxes[8].text === "O"))
+                ||  ((self.boxes[2].text === "O") && (self.boxes[4].text === "O") && (self.boxes[6].text === "O"))
+            ){ 
+                // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';             
+                //a win condition is satisfied
+                self.gameEvents.header = "Player  O  Wins";
+                self.gameEvents.winScreen = true;
+                self.gameEvents.music = false;
+                self.gameEvents.musicWin = true;
+                //board hidden
+                self.gameEvents.board = false;
+                //reset button appears
+                self.gameEvents.resetButton = true;
+                //win o tally increments
+                self.gameEvents.tallyO ++;
+                console.log('O wins')                
             }else if(
                 //check rows for 3 x's
                    ((self.boxes[0].text === "X") && (self.boxes[1].text === "X") && (self.boxes[2].text === "X"))
@@ -102,45 +90,27 @@ angular
             ){  
                 // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';
                 //a win condition is satisfied, run win events big party
-                self.header.text = "Player 1 Wins";
-                self.header.$save();
-                self.winScreen = true;
-                // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/iSJv10QN_8g?autoplay=1" frameborder="0"></iframe>';
+                self.gameEvents.header = "Player  X  Wins";
+                self.gameEvents.winScreen = true;
+                self.gameEvents.music = false;
+                self.gameEvents.musicWin = true;
+                // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/VBlFHuCzPgY?autoplay=1" frameborder="0"></iframe>';
                 //board hidden
-                self.board = false;
+                self.gameEvents.board = false;
                 //reset button appears                
-                self.resetButton = true;
+                self.gameEvents.resetButton = true;
                 //win x tally increments
-                self.tallyX.wins ++;
-                self.tallyX.$save();
+                self.gameEvents.tallyX ++;
                 console.log('X wins')               
-            }else if( 
-                //check rows for 3 o's
-                    ((self.boxes[0].text === "O") && (self.boxes[1].text === "O") && (self.boxes[2].text === "O"))
-                ||  ((self.boxes[3].text === "O") && (self.boxes[4].text === "O") && (self.boxes[5].text === "O"))
-                ||  ((self.boxes[6].text === "O") && (self.boxes[7].text === "O") && (self.boxes[8].text === "O"))
-                //check cols for 3 o's
-                ||  ((self.boxes[0].text === "O") && (self.boxes[3].text === "O") && (self.boxes[6].text === "O"))
-                ||  ((self.boxes[1].text === "O") && (self.boxes[4].text === "O") && (self.boxes[7].text === "O"))
-                ||  ((self.boxes[2].text === "O") && (self.boxes[5].text === "O") && (self.boxes[8].text === "O"))
-                //check diags for 3 o's
-                ||  ((self.boxes[0].text === "O") && (self.boxes[4].text === "O") && (self.boxes[8].text === "O"))
-                ||  ((self.boxes[2].text === "O") && (self.boxes[4].text === "O") && (self.boxes[6].text === "O"))
-            ){ 
-                // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';             
-                //a win condition is satisfied
-                self.header.text = "Player 2 Wins";
-                self.header.$save();
-                self.winScreen = true;
-                //board hidden
-                self.board = false;
-                //reset button appears
-                self.resetButton = true;
-                //win o tally increments
-                self.tallyO.wins ++;
-                self.tallyO.$save();
-                console.log('O wins')                
+            }else if( self.gameEvents.turn === 9 ){
+                self.gameEvents.header = "It's a Tie";
+                console.log("tie");
+                self.gameEvents.resetButton = true;
+            
             }
+
+            self.gameEvents.$save();
+
         }    
 
         //defines function of the reset button
@@ -150,28 +120,28 @@ angular
                 
                 self.boxes[i].bag = true;
                 self.boxes[i].text = "";
-                self.winScreen = false;
-                self.board = true;
                 self.boxes.$save();
-                document.getElementsByClassName('winScreen')[0].innerHTML = '';
+                // document.getElementsByClassName('winScreen')[0].innerHTML = '';
 
             }
-            
-            self.header.text = "Get that Dough";
-            self.header.$save();
-            self.resetButton = false; 
-            self.player.turn = 0;
-            self.player.$save();            
+
+            self.gameEvents.winScreen = false;
+            self.gameEvents.music = true;
+            self.gameEvents.musicWin = false;
+            self.gameEvents.board = true;
+            self.gameEvents.header = "Get that Dough";
+            self.gameEvents.resetButton = false;
+            self.gameEvents.turn = 0;
+            self.gameEvents.$save();                         
 
         }
 
         //clears the scoreboard
         self.clearBoard = function(){
 
-            self.tallyO.wins = 0;
-            self.tallyX.wins = 0;
-            self.tallyO.$save();
-            self.tallyX.$save();  
+            self.gameEvents.tallyO = 0;
+            self.gameEvents.tallyX = 0;
+            self.gameEvents.$save();  
 
         }
 

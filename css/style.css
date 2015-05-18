@@ -3,32 +3,45 @@ body {
 	background-size: cover;*/
 	text-align: center;
 	font-family: 'Cardo', serif;
-	font-weight: bold;
+	background-color: white;
+	font-weight: bolder;
 	
 }
 
 #ban {
 	font-size: 12vw;
-	text-shadow: 0px 0px .1em #ffbf00;
-	margin: .5em 0 .4em;
+	/*text-shadow: 0px 0px .1em #ffbf00;*/
+	margin: .5em 0 .5em;
 	font-family: 'Playball', sans-serif;
-	font-weight: bolder;
 	color: black;
+	font-weight: bolder;
+	text-shadow:
+    -1px -1px 0 #EBB518,
+    1px -1px 0 #EBB518,
+    -1px 1px 0 #EBB518,
+    1px 1px 0 #EBB518;  
 }
 
 #board {
 	width: 80vw;
 	height: 80vw;
 	margin: 0 auto;
+	text-align: center;
+
 }
 
 .box {
-	height: 31.5%;
-	width: 31.5%;
+	height: 33%;
+	width: 33%;
 	float: left;
-	background-color: rgba(0,0,0,.33);
-	border: #ffbf00 solid 2px;
+	background-color: white;
 	font-size: 17.5vw;
+	text-shadow:
+    -1px -1px 0 #EBB518,
+    1px -1px 0 #EBB518,
+    -1px 1px 0 #EBB518,
+    1px 1px 0 #EBB518;	
+
 
 }
 
@@ -47,7 +60,7 @@ body {
 }
 
 .unpicked {
-	background-image: url("http://www.ssgreenberg.name/Drupal/Drupal/sites/default/files/StevesTutorials/money-bags.png");
+	background-image: url("../bag.png");
 	background-size: cover;
 	background-position:  center center;
 }
@@ -61,27 +74,28 @@ body {
   	bottom: 0;
   	left: 0;
   	z-index: 3000;
-  	background-color: rgba(255,255,255,.66);
-  	color: rgba(0,0,0,);
+  	background-color: rgba(255,255,255,.3);
+  	color: black;
   	font-size: 1em;	
-
 }
 
 .score span {
-	color: #ffbf00;
+	color: #EBB518;
 }
 
 #clearboard {
+	font-family: 'Playball', sans-serif;
   	position: fixed;
   	display: inline-block;
 	width: 20%;
-  	margin: .9em 40%;
+  	margin: .65em 40%;
   	bottom: 0;
   	left: 0;
   	height: 1em;
   	z-index: 4000;
-  	color: #ffbf00;
-  	font-size: 1em;	
+	color: #EBB518;
+	font-weight: bolder; 
+  	font-size: 1.25em;	
 }
 
 #clearboard:hover {
@@ -104,26 +118,23 @@ body {
 	right: 0;
 	z-index: 6000;
 	font-size: 2em;
-	padding: .5em 0;
+	padding: .25em 0;
   	width: 83%;
   	max-width: 30em;
-  	background-color: #ffbf00;
+  	background-color: black;
   	margin: 0 auto;
-  	color: black;
+  	color: #EBB518;
  	font-weight: bold;
  	letter-spacing: .05em;
- 	bottom:2.5em;
+ 	bottom:2em;
 }
 
 #button:hover {
-  	background-color: black;
-  	border: #ffbf00 solid 2px;
-  	color: #ffbf00;
- 	border: rgba(0,0,0,.5) solid 2px; 
- 	
+  	color: black;
+  	background-color: #EBB518; 	
 }
 
-.animated { 
+.animatedButton { 
     -webkit-animation-duration: 2s; 
     animation-duration: 2s; 
     -webkit-animation-fill-mode: both; 
@@ -136,12 +147,12 @@ body {
 
 @-webkit-keyframes pulse { 
     0% { -webkit-transform: scale(1); } 
-    50% { -webkit-transform: scale(1.05); } 
+    50% { -webkit-transform: scale(1.025); } 
     100% { -webkit-transform: scale(1); } 
 } 
 @keyframes pulse { 
     0% { transform: scale(1); } 
-    50% { transform: scale(1.05); } 
+    50% { transform: scale(1.025); } 
     100% { transform: scale(1); } 
 } 
 .pulse { 
@@ -150,14 +161,12 @@ body {
 }
 
 
-
 @media (min-width: 35em) {
 
 	#ban {
 		font-size: 9vw;
 		line-height: .5em;
-		margin: .5em 0;
-
+		margin: .5em 0 .75em;
 	}	
 
 	.box {
@@ -165,7 +174,6 @@ body {
 	}
 	
 	#board {
-
 		width: 70vh;
 		height: 70vh;
 		margin: 0 auto;
@@ -175,10 +183,9 @@ body {
 
 @media (min-width: 55em) {
 
-#ban {
-	font-size: 6vw;
-
-}v
+	#ban {
+		font-size: 6vw;
+	}
 
 
 }	
