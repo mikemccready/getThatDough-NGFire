@@ -14,9 +14,11 @@
 	<meta name="viewport" content="initial-scale=1">
 </head>
 <body ng-controller="MainController as mainCtrl">	
-	<h1 id="ban">Get that Dough</h1>
+	<h1 id="ban" ng-bind="mainCtrl.header.text"></h1>
 	<div id="board" ng-show="mainCtrl.board">
-		<div class="box" ng-repeat="b in mainCtrl.boxes" ng-click="mainCtrl.playerMove($index)" ng-class="{'unpicked': b.bag}">{{b.text}}
+		<!-- <iframe height="0" width="0" src="https://www.youtube.com/embed/VBlFHuCzPgY?autoplay=1" frameborder="0"></iframe>  -->
+		<div class="box" ng-repeat="b in mainCtrl.boxes" ng-click="mainCtrl.playerMove($index)" ng-class="{'unpicked': b.bag}">           
+		{{b.text}}
 		</div>
 	</div>
 	<div id="button" ng-show="mainCtrl.resetButton" ng-click="mainCtrl.reset()" id="animated-example" class="animated pulse">Play Again</div>

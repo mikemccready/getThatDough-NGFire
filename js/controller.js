@@ -11,32 +11,17 @@ angular
         self.winScreen = false;
         self.board = true;
         self.resetButton = false;
-        self.tallyX = function(){
 
-            var ref = new Firebase("https://getthatdough.firebaseio.com/tallyX");
-            var tallyX = $firebaseObject(ref); 
-            return tallyX;       
+        //sets up header to announce outcome
+        self.header = function(){
 
-        }(); 
-
-        self.tallyO = function(){
-
-            var ref = new Firebase("https://getthatdough.firebaseio.com/tallyO");
-            var tallyO = $firebaseObject(ref); 
-            return tallyO;       
+            var ref = new Firebase("https://getthatdough.firebaseio.com/header");
+            var header = $firebaseObject(ref);         
+            return header;
 
         }();
-        
-        //sets player object with alternating turn property from "x" to "o"
-        self.player = function(){
 
-            var ref = new Firebase("https://getthatdough.firebaseio.com/player");
-            var player = $firebaseObject(ref); 
-            return player;       
-
-        }();           
-               
-
+        //returns array from firebase to set up the game board
         self.boxes = function(){
 
             var ref = new Firebase("https://getthatdough.firebaseio.com/boxes");
@@ -45,8 +30,36 @@ angular
 
         }();
 
-        self.playerMove = function(i){
+        //sets up p1 win tally
+        self.tallyX = function(){
 
+            var ref = new Firebase("https://getthatdough.firebaseio.com/tallyX");
+            var tallyX = $firebaseObject(ref); 
+            return tallyX;       
+
+        }(); 
+       
+        //sets up p2 win tally
+        self.tallyO = function(){
+
+            var ref = new Firebase("https://getthatdough.firebaseio.com/tallyO");
+            var tallyO = $firebaseObject(ref); 
+            return tallyO;       
+
+        }();
+        
+        //sets player turn variable
+        self.player = function(){
+
+            var ref = new Firebase("https://getthatdough.firebaseio.com/player");
+            var player = $firebaseObject(ref); 
+            return player;       
+
+        }();  
+
+        //determines what move is recorded with incrementing turn variable      
+        self.playerMove = function(i){
+            //square is taken
             if (self.boxes[i].text !== ""){
                 console.log("taken");
             }
@@ -65,10 +78,12 @@ angular
 
         }
 
-
+        //function establishes tie and win conditions
        function checkWin(){
 
             if( self.player.turn > 8 ){
+                self.header.text = "It's a Tie";
+                self.header.$save();
                 console.log("tie");
                 self.resetButton = true;
             
@@ -85,8 +100,10 @@ angular
                 ||  ((self.boxes[0].text === "X") && (self.boxes[4].text === "X") && (self.boxes[8].text === "X"))
                 ||  ((self.boxes[2].text === "X") && (self.boxes[4].text === "X") && (self.boxes[6].text === "X"))
             ){  
-                document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';
+                // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';
                 //a win condition is satisfied, run win events big party
+                self.header.text = "Player 1 Wins";
+                self.header.$save();
                 self.winScreen = true;
                 // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/iSJv10QN_8g?autoplay=1" frameborder="0"></iframe>';
                 //board hidden
@@ -110,8 +127,10 @@ angular
                 ||  ((self.boxes[0].text === "O") && (self.boxes[4].text === "O") && (self.boxes[8].text === "O"))
                 ||  ((self.boxes[2].text === "O") && (self.boxes[4].text === "O") && (self.boxes[6].text === "O"))
             ){ 
-                document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';             
+                // document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe>';             
                 //a win condition is satisfied
+                self.header.text = "Player 2 Wins";
+                self.header.$save();
                 self.winScreen = true;
                 //board hidden
                 self.board = false;
@@ -124,7 +143,7 @@ angular
             }
         }    
 
-
+        //defines function of the reset button
         self.reset = function(){
 
             for (var i = 0; i < 9; i ++){
@@ -137,19 +156,23 @@ angular
                 document.getElementsByClassName('winScreen')[0].innerHTML = '';
 
             }
+            
+            self.header.text = "Get that Dough";
+            self.header.$save();
             self.resetButton = false; 
             self.player.turn = 0;
             self.player.$save();            
 
-
         }
 
+        //clears the scoreboard
         self.clearBoard = function(){
-            console.log("click");
+
             self.tallyO.wins = 0;
             self.tallyX.wins = 0;
             self.tallyO.$save();
             self.tallyX.$save();  
+
         }
 
     
@@ -158,93 +181,5 @@ angular
 
   
 
-
-
-
-
-
-
-    
-    // 	self.boxes = [{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true}]
-    //     self.win = false;
-    //     self.board = true;
-    //     self.turn = false;
-    //     self.resetButton = false;
-    //     self.tallyX = "0";
-    //     self.tallyO = "0";
-
-    //     self.checkWin = function(){
-    //         if( 
-    //                 //check rows for x
-    //                   ((self.boxes[0].text === "x") && (self.boxes[1].text === "x") && (self.boxes[2].text === "x"))
-    //                 ||((self.boxes[3].text === "x") && (self.boxes[4].text === "x") && (self.boxes[5].text === "x"))
-    //                 ||((self.boxes[6].text === "x") && (self.boxes[7].text === "x") && (self.boxes[8].text === "x"))
-    //                   //check cols for x
-    //                 ||((self.boxes[0].text === "x") && (self.boxes[3].text === "x") && (self.boxes[6].text === "x"))
-    //                 ||((self.boxes[1].text === "x") && (self.boxes[4].text === "x") && (self.boxes[7].text === "x"))
-    //                 ||((self.boxes[2].text === "x") && (self.boxes[5].text === "x") && (self.boxes[8].text === "x"))
-    //                   //check diags for x
-    //                 ||((self.boxes[0].text === "x") && (self.boxes[4].text === "x") && (self.boxes[8].text === "x"))
-    //                 ||((self.boxes[2].text === "x") && (self.boxes[4].text === "x") && (self.boxes[6].text === "x"))
-    //         )            
-    //         {
-    //             self.win = true;
-    //             self.board = false;
-    //             document.getElementsByClassName('winScreen')[0].innerHTML = '<iframe height="0" width="0" frameborder="0" src="https://www.youtube.com/embed/iSJv10QN_8g?autoplay=1"></iframe>';
-    //             self.resetButton = true;
-    //             self.tallyX ++;
-    //             console.log('X wins')               
-    //         }  
-    //         else if(   //check rows for x
-    //                   ((self.boxes[0].text === "o") && (self.boxes[1].text === "o") && (self.boxes[2].text === "o"))
-    //                 ||((self.boxes[3].text === "o") && (self.boxes[4].text === "o") && (self.boxes[5].text === "o"))
-    //                 ||((self.boxes[6].text === "o") && (self.boxes[7].text === "o") && (self.boxes[8].text === "o"))
-    //                   //check cols for x
-    //                 ||((self.boxes[0].text === "o") && (self.boxes[3].text === "o") && (self.boxes[6].text === "o"))
-    //                 ||((self.boxes[1].text === "o") && (self.boxes[4].text === "o") && (self.boxes[7].text === "o"))
-    //                 ||((self.boxes[2].text === "o") && (self.boxes[5].text === "o") && (self.boxes[8].text === "o"))
-    //                   //check diags for x
-    //                 ||((self.boxes[0].text === "o") && (self.boxes[4].text === "o") && (self.boxes[8].text === "o"))
-    //                 ||((self.boxes[2].text === "o") && (self.boxes[4].text === "o") && (self.boxes[6].text === "o"))
-    //         )                
-    //         {
-    //             self.win = true;
-    //             self.board = false;
-    //             self.resetButton = true;
-    //             self.tallyO ++;
-    //             console.log('O wins')                
-    //         }
-    //     }                   
-
-
-    // 	self.playerMove = function(i){
-    //         if (self.boxes[i].text !== ""){
-    //             console.log("taken")
-    //         }else if (self.turn === false){
-    //              
-    //             self.boxes[i].bag=false;
-    //             console.log("X");
-    //             self.turn = true;
-    //         }else {
-    //             self.boxes[i].text= "o"; 
-    //             self.boxes[i].bag=false;                               
-    //             console.log("O"); 
-    //             self.turn = false;
-    //         }
-    //         self.checkWin();
-    //     };
-
-    //     self.reset = function(){
-    //       self.boxes = [{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true},{text:"", bag:true}]
-    //       self.win = false;
-    //       self.board = true; 
-    //       self.resetButton = false;
-    //       document.getElementsByClassName('winScreen')[0].innerHTML = ''; 
-    //     }
-
-
-
-
-    // };      
 
 
