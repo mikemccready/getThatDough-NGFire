@@ -7,6 +7,9 @@ angular
     function MainController($firebaseObject){
 
     	var self = this;
+
+        self.startButton = true;
+
         
         self.gameEvents = function(){
 
@@ -16,6 +19,7 @@ angular
 
         }();
 
+
         //returns array from firebase to set up the game board
         self.boxes = function(){
 
@@ -24,27 +28,57 @@ angular
             return boxes;
 
         }();
-  
-        //determines what move is recorded with incrementing turn variable      
+
+        self.setBoard = function(){
+            self.gameEvents.board = true;
+            self.gameEvents.header = "Get that Dough";
+            self.gameEvents.playerId = 0;
+            self.gameEvents.winScreen = false;
+            self.gameEvents.music = true;
+            self.gameEvents.musicWin = false;
+            self.gameEvents.resetButton = false;
+            self.gameEvents.turn = 0;
+            self.gameEvents.tallyO = 0;
+            self.gameEvents.tallyX = 0;           
+            self.gameEvents.$save(); 
+        }();
+
+
+        self.playerAssign = function(){
+            if (self.gameEvents.playerId === 0){
+                self.player = "x";
+                self.gameEvents.playerId ++;
+                self.startButton = false;
+                self.gameEvents.turn = 0;
+                self.gameEvents.$save();
+                console.log("You are Player X");
+            }else if (self.gameEvents.playerId === 1){
+                self.player = "o";
+                self.gameEvents.playerId --;
+                self.startButton = false;
+                self.gameEvents.turn = 0;
+                self.gameEvents.$save();            
+                console.log("You are Player O");
+            }                
+        }       
+
         self.playerMove = function(i){
-            //square is taken
             if (self.boxes[i].text !== ""){
                 console.log("taken");
-            }
-            else if (self.gameEvents.turn % 2 === 0){
+            }else if (self.player === "x" && self.gameEvents.turn % 2 === 0) {               
+                self.boxes[i].bag = false;
                 self.boxes[i].text = "X";
                 self.gameEvents.turn ++;
-                self.gameEvents.music = true;
-            }else {
+            }else if (self.player === "o" && self.gameEvents.turn % 2 !== 0) {
+                self.boxes[i].bag = false;
                 self.boxes[i].text = "O";
-                self.gameEvents.turn ++;   
-            } 
-            self.boxes[i].bag = false;            
+                self.gameEvents.turn ++;
+            }
             self.boxes.$save();
             self.gameEvents.$save();
             checkWin();  
-
         }
+  
 
         //function establishes tie and win conditions
        function checkWin(){

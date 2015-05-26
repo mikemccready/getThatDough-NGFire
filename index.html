@@ -15,13 +15,15 @@
 </head>
 <body ng-controller="MainController as mainCtrl">	
 	<h1 id="ban" ng-bind="mainCtrl.gameEvents.header"></h1>
-	<div id="board" class="animatedBoard .bounceInUp" ng-show="mainCtrl.gameEvents.board" >
-		<div ng-if="mainCtrl.gameEvents.music"><iframe height="0" width="0" src="https://www.youtube.com/embed/VBlFHuCzPgY?autoplay=1" frameborder="0"></iframe></div>
+	<div id="start" ng-show="mainCtrl.startButton" ng-click="mainCtrl.playerAssign()" class="animatedButton pulse">Start Game</div>
+	<div id="board" class="animatedButton pulse" ng-show="mainCtrl.gameEvents.board" >
+		<!-- <div ng-if="mainCtrl.gameEvents.music"><iframe height="0" width="0" src="https://www.youtube.com/embed/VBlFHuCzPgY?autoplay=1" frameborder="0"></iframe></div> -->
 		<div ng-if="mainCtrl.gameEvents.musicWin"><iframe height="0" width="0" src="https://www.youtube.com/embed/lY7x292xoRo?autoplay=1" frameborder="0"></iframe></div>
 		<div class="box" ng-repeat="b in mainCtrl.boxes" ng-click="mainCtrl.playerMove($index)" ng-class="{'unpicked': b.bag}">           
 		{{b.text}}
 		</div>
 	</div>
+	<div>{{mainCtrl.status}}</div>
 	<div id="button" ng-show="mainCtrl.gameEvents.resetButton" ng-click="mainCtrl.reset()" class="animatedButton pulse">Play Again</div>
 	<div id="clearboard" ng-click="mainCtrl.clearBoard()">Clear</div>
 	<div class="score">
