@@ -43,41 +43,61 @@ angular
             self.gameEvents.$save(); 
         }();
 
-
-        self.playerAssign = function(){
-            if (self.gameEvents.playerId === 0){
-                self.player = "x";
-                self.gameEvents.playerId ++;
-                self.startButton = false;
-                self.gameEvents.turn = 0;
-                self.gameEvents.$save();
-                console.log("You are Player X");
-            }else if (self.gameEvents.playerId === 1){
-                self.player = "o";
-                self.gameEvents.playerId --;
-                self.startButton = false;
-                self.gameEvents.turn = 0;
-                self.gameEvents.$save();            
-                console.log("You are Player O");
-            }                
-        }       
-
         self.playerMove = function(i){
             if (self.boxes[i].text !== ""){
                 console.log("taken");
-            }else if (self.player === "x" && self.gameEvents.turn % 2 === 0) {               
-                self.boxes[i].bag = false;
+            }else if (self.gameEvents.turn % 2 === 0) {               
                 self.boxes[i].text = "X";
                 self.gameEvents.turn ++;
-            }else if (self.player === "o" && self.gameEvents.turn % 2 !== 0) {
-                self.boxes[i].bag = false;
+            }else{
                 self.boxes[i].text = "O";
                 self.gameEvents.turn ++;
             }
+            self.boxes[i].bag = false;            
             self.boxes.$save();
             self.gameEvents.$save();
             checkWin();  
         }
+
+
+        
+
+
+
+        // self.playerAssign = function(){
+        //     if (self.gameEvents.playerId === 0){
+        //         self.player = "x";
+        //         self.gameEvents.playerId ++;
+        //         self.startButton = false;
+        //         self.gameEvents.turn = 0;
+        //         self.gameEvents.$save();
+        //         console.log("You are Player X");
+        //     }else if (self.gameEvents.playerId === 1){
+        //         self.player = "o";
+        //         self.gameEvents.playerId --;
+        //         self.startButton = false;
+        //         self.gameEvents.turn = 0;
+        //         self.gameEvents.$save();            
+        //         console.log("You are Player O");
+        //     }                
+        // }       
+
+        // self.playerMove = function(i){
+        //     if (self.boxes[i].text !== ""){
+        //         console.log("taken");
+        //     }else if (self.player === "x" && self.gameEvents.turn % 2 === 0) {               
+        //         self.boxes[i].bag = false;
+        //         self.boxes[i].text = "X";
+        //         self.gameEvents.turn ++;
+        //     }else if (self.player === "o" && self.gameEvents.turn % 2 !== 0) {
+        //         self.boxes[i].bag = false;
+        //         self.boxes[i].text = "O";
+        //         self.gameEvents.turn ++;
+        //     }
+        //     self.boxes.$save();
+        //     self.gameEvents.$save();
+        //     checkWin();  
+        // }
   
 
         //function establishes tie and win conditions

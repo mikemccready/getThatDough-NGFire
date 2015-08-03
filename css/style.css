@@ -2,8 +2,7 @@ body {
 	text-align: center;
 	font-family: 'Cardo', serif;
 	background-color: white;
-	font-weight: bolder;
-	
+	font-weight: bolder;	
 }
 
 #start {
@@ -22,25 +21,20 @@ body {
  	font-weight: bold;
  	letter-spacing: .05em;
  	bottom:2em;
-
-
 }
 
 #ban {
 	font-size: 12vw;
-	/*text-shadow: 0px 0px .1em #ffbf00;*/
 	margin: .5em 0 .5em;
 	font-family: 'Playball', sans-serif;
 	color: black;
 	font-weight: bolder;
-	z-index: 10000;
- 	
+	z-index: 10000;	
     text-shadow:
-    -1px -1px 0 #EBB518,
-    1px -1px 0 #EBB518,
-    -1px 1px 0 #EBB518,
-    1px 1px 0 #EBB518; 
-    
+		-1px -1px 0 #EBB518,
+		1px -1px 0 #EBB518,
+		-1px 1px 0 #EBB518,
+		1px 1px 0 #EBB518; 
 }
 
 #board {
@@ -48,7 +42,6 @@ body {
 	height: 70vw;
 	margin: 0 auto;
 	text-align: center;
-
 }
 
 .box {
@@ -68,7 +61,7 @@ body {
 .winScreen  {
 	display: inline-block;
 	position: fixed;
-	background-image: url(../work.gif);
+	background-image: url(../images/work.gif);
 	background-size: cover;
 	background-position: center;
 	height: 101vh;
@@ -80,7 +73,7 @@ body {
 }
 
 .unpicked {
-	background-image: url("../bag.png");
+	background-image: url("../images/bag.png");
 	background-size: cover;
 	background-position:  center center;
 }
@@ -95,7 +88,8 @@ body {
   	left: 0;
   	z-index: 3000;
   	color: black;
-  	font-size: 1em;	
+  	font-size: 1em;
+  	background-color: rgba(255,255,255,.33);	
 }
 
 .score span {
